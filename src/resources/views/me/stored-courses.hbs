@@ -12,7 +12,6 @@
             </div>
 
             <select class="form-select form-select-sm checkbox-select-option" name="action" required>
-                <option value="">-- Chọn hành động --</option>
                 <option value="delete">Xóa</option>
             </select>
 
@@ -27,7 +26,9 @@
                 <th scope="col">#</th>
                 <th scope="col">Tên khóa học</th>
                 <th scope="col">Trình độ</th>
-                <th scope="col" colspan="3">Thời gian tạo</th>
+                <th scope="col">Thời gian tạo</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -80,7 +81,6 @@
 <!--Delete form hidden-->
 <form name="delete-course-form" method="POST">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
         var courseId;
@@ -125,5 +125,5 @@
                 checkAllSubmitBtn.addClass('disabled');
             }
         }
-    })
+    });
 </script>

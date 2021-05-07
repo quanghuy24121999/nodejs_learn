@@ -61,6 +61,7 @@ class CourseController {
         .catch(next);
     }
 
+    // [POST] /courses/handle-form-action
     handleFormActions(req, res, next) {
         switch(req.body.action) {
             case 'delete':
@@ -68,6 +69,24 @@ class CourseController {
             .then(() => res.redirect('back'))
             .catch(next);
                 break;
+            default:
+                res.json({ message: 'Action is invalid' });
+        }
+    }
+
+    // [POST] /courses/handle-form-action-in-trash
+    handleFormActionInTrash(req, res, next) {
+        switch(req.body.action) {
+            case 'delete':
+            Course.deleteMany({ _id: { $in: req.body.courseIds } })
+            .then(() => res.redirect('back'))
+            .catch(next);
+                break;
+            case 'restore':
+                Course.restore({ _id: { $in: req.body.courseIds } })
+                .then(() => res.redirect('back'))
+                .catch(next);
+                    break;
             default:
                 res.json({ message: 'Action is invalid' });
         }
