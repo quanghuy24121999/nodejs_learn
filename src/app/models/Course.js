@@ -1,18 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const slug = require('mongoose-slug-generator');
 const mongooseDelete = require('mongoose-delete');
 
-const Course = new Schema({
-    name: { type: String, required: true },
-    description: { type: String, maxLength: 255 },
-    image: { type: String },
-    videoId: { type: String },
-    level: { type: String },
-    slug: { type: String, slug: 'name', unique: true },
-}, {
-    timestamps: true,
-});
+const Course = new Schema(
+    {
+        _id: { type: Number },
+        name: { type: String, required: true },
+        description: { type: String, maxLength: 255 },
+        image: { type: String },
+        videoId: { type: String },
+        level: { type: String },
+        slug: { type: String, slug: 'name', unique: true },
+    },
+    {
+        _is: false,
+        timestamps: true,
+    }
+);
 
 Course.query.sortable = function (req) {
     if (req.query.hasOwnProperty('_sort')) {
@@ -24,6 +30,7 @@ Course.query.sortable = function (req) {
     return this;
 }
 
+Course.plugin(AutoIncrement);
 Course.plugin(mongooseDelete, {
     overrideMethods: 'all',
     deletedAt: true
