@@ -14,6 +14,16 @@ const Course = new Schema({
     timestamps: true,
 });
 
+Course.query.sortable = function (req) {
+    if (req.query.hasOwnProperty('_sort')) {
+        const isvalidType = ['asc', 'desc'].includes(req.query.type);
+        return this.sort({
+            [req.query.column]: isvalidType ? req.query.type : 'desc'
+        });
+    }
+    return this;
+}
+
 Course.plugin(mongooseDelete, {
     overrideMethods: 'all',
     deletedAt: true
